@@ -1,18 +1,21 @@
-package org.connect4.game;
-
-import org.connect4.player.ComputerPlayer;
-import org.connect4.player.HumanPlayer;
+package org.connect4.model;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+
+import org.connect4.player.ComputerPlayer;
+import org.connect4.player.HumanPlayer;
+
+
+
 /**
  * A Connect 4 játékot megvalósító osztály, amely kezeli a játéktáblát,
  * a játékosokat és a játékállás betöltését vagy mentését.
  */
-public final class GameState {
+public final class SaveandLoad {
     /** A játéktábla sorainak száma. */
     private static final int ROWS = 6;
     /** A játéktábla oszlopainak száma. */
@@ -23,12 +26,14 @@ public final class GameState {
     private HumanPlayer player1;
     /** A második játékos, aki számítógép. */
     private ComputerPlayer player2;
+
     /**
      * Létrehoz egy új játékot egy üres táblával.
      */
-    public GameState() {
+    public SaveandLoad() {
         this.board = new Board(ROWS, COLUMNS); // Üres tábla inicializálása
     }
+
     /**
      * Játékállás betöltése fájlból.
      *
@@ -41,7 +46,6 @@ public final class GameState {
             for (int row = 0; row < lines.size() && row < ROWS; row++) {
                 String line = lines.get(row);
                 String[] colors = line.split(" ");
-                // Szóközök alapján bontsd le a sort
                 for (int col = 0; col < colors.length && col < COLUMNS; col++) {
                     String color = colors[col].trim();
                     if (color.equals("P")) {
@@ -69,7 +73,6 @@ public final class GameState {
         try {
             List<String> lines = new ArrayList<>();
 
-            // Játéktábla sorainak bejárása és mentése
             for (int row = 0; row < ROWS; row++) {
                 StringBuilder line = new StringBuilder();
                 for (int col = 0; col < COLUMNS; col++) {
@@ -78,10 +81,9 @@ public final class GameState {
                         line.append(". "); // Üres mező
                     } else {
                         line.append(disc.getColor().charAt(0)).append(" ");
-                        // Korong színének első betűje
                     }
                 }
-                lines.add(line.toString().trim()); // Sor mentése
+                lines.add(line.toString().trim());
             }
 
             Files.write(Paths.get(filePath), lines);
@@ -90,6 +92,7 @@ public final class GameState {
             System.out.println("Nem sikerült elmenteni a játékállást.");
         }
     }
+
     /**
      * Visszaadja a játéktáblát.
      *
@@ -98,6 +101,7 @@ public final class GameState {
     public Board getBoard() {
         return board;
     }
+
     /**
      * Beállítja a játéktáblát a megadott táblára.
      *

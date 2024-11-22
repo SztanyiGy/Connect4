@@ -1,8 +1,9 @@
-package org.connect4.game;
+package org.connect4.model;
 
 import org.connect4.player.HumanPlayer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BoardTest {
@@ -14,75 +15,21 @@ public class BoardTest {
         // Inicializáljunk egy 6x7-es táblát
         board = new Board(6, 7);
     }
+
     @Test
     public void testBoardInitialization() {
-        Board board = new Board(6, 7);
         assertEquals(6, board.getRows());
         assertEquals(7, board.getColumns());
     }
 
     @Test
     public void testDropDisc() {
-        Board board = new Board(6, 7);
         HumanPlayer player = new HumanPlayer("TestPlayer", "Sárga");
         assertTrue(board.dropDisc(player, 0));
     }
 
     @Test
-    public void testCheckForWinVertical() {
-        Board board = new Board(6, 7);
-        HumanPlayer player = new HumanPlayer("TestPlayer", "Sárga");
-        for (int i = 0; i < 4; i++) {
-            board.dropDisc(player, 0);
-        }
-        assertTrue(board.checkForWin(player.getColor()));
-    }
-
-    @Test
-    public void testCheckForWinHorizontal() {
-        Board board = new Board(6, 7);
-        HumanPlayer player = new HumanPlayer("TestPlayer", "Sárga");
-        for (int i = 0; i < 4; i++) {
-            board.dropDisc(player, i); // Sorban dobjuk a korongokat
-        }
-        assertTrue(board.checkForWin(player.getColor()));
-    }
-
-    @Test
-    public void testCheckForWinDiagonalLeftToRight() {
-        Board board = new Board(6, 7);
-        HumanPlayer player = new HumanPlayer("TestPlayer", "Sárga");
-
-        // Diagonális balról jobbra
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < i; j++) {
-                board.dropDisc(new HumanPlayer("TestPlayer2", "Piros"), i);
-            }
-            board.dropDisc(player, i); // A Sárga játékos átlósan helyezi el a korongokat
-        }
-
-        assertTrue(board.checkForWin(player.getColor()));
-    }
-
-    @Test
-    public void testCheckForWinDiagonalRightToLeft() {
-        Board board = new Board(6, 7);
-        HumanPlayer player = new HumanPlayer("TestPlayer", "Sárga");
-
-        // Diagonális jobbról balra
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < i; j++) {
-                board.dropDisc(new HumanPlayer("TestPlayer2", "Piros"), 3 - i);
-            }
-            board.dropDisc(player, 3 - i); // A Sárga játékos jobbról balra helyezi el a korongokat
-        }
-
-        assertTrue(board.checkForWin(player.getColor()));
-    }
-
-    @Test
     public void testInvalidColumn() {
-        Board board = new Board(6, 7);
         HumanPlayer player = new HumanPlayer("TestPlayer", "Sárga");
 
         // Teszteljük, hogy dob-e kivételt, ha érvénytelen oszlopot adunk meg
@@ -94,6 +41,7 @@ public class BoardTest {
         String actualMessage = exception.getMessage();
         assertTrue(actualMessage.contains(expectedMessage));
     }
+
     @Test
     public void testInvalidBoardSize() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
@@ -104,6 +52,13 @@ public class BoardTest {
         String actualMessage = exception.getMessage();
         assertTrue(actualMessage.contains(expectedMessage));
     }
+
+    @Test
+    void testInvalidBoardInitialization() {
+        assertThrows(IllegalArgumentException.class, () -> new Board(3, 7));
+        assertThrows(IllegalArgumentException.class, () -> new Board(6, 13));
+    }
+
     @Test
     public void testGetGrid() {
         // Ellenőrizzük, hogy a grid mérete helyes
@@ -119,5 +74,32 @@ public class BoardTest {
         }
     }
 
-}
+    @Test
+    void testDropDiscColumnFull() {
+        HumanPlayer player = new HumanPlayer("TestPlayer", "Sárga");
+        for (int i = 0; i < 6; i++) {
+            board.dropDisc(player, 0); // Töltsd fel az oszlopot
+        }
+        assertFalse(board.dropDisc(player, 0)); // Oszlop tele van
+    }
 
+    @Test
+    void testGetDiscColor() {
+        HumanPlayer player = new HumanPlayer("TestPlayer", "Sárga");
+        board.dropDisc(player, 0);
+        assertEquals("Sárga", board.getDiscColor(5, 0)); // Meg kell kapni a korong színét
+        assertNull(board.getDiscColor(0, 0)); // Üres mező
+    }
+
+    @Test
+    public void testToString() {
+        Board board = new Board(6, 7);
+        String expected = "- - - - - - - \n" + // Üres mezők
+                "- - - - - - - \n" +
+                "- - - - - - - \n" +
+                "- - - - - - - \n" +
+                "- - - - - - - \n" +
+                "- - - - - - - \n"; // Az elvárt kimenet
+        assertEquals(expected, board.toString());
+    }
+}

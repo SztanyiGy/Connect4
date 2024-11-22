@@ -1,8 +1,8 @@
 package org.connect4;
 
 import org.connect4.gameworking.Game;
+import org.connect4.gameworking.InputReader;
 
-import java.util.Scanner;
 
 /**
  * A Connect 4 játék fő osztálya, amely elindítja a játékot
@@ -24,9 +24,9 @@ public final class Main {
      * @param args A parancssori argumentumok.
      */
     public static void main(final String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        Game game = new Game(scanner);
-        game.start();
+        InputReader inputReader = new InputReader(System.in);  // Scanner helyett InputReader-t használunk
+        Game game = new Game(inputReader);
+        game.showMenu();
     }
 
     // Privát konstruktor

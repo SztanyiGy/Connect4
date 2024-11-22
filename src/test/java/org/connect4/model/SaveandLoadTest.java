@@ -1,15 +1,15 @@
-package org.connect4.game;
+package org.connect4.model;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class GameStateTest {
+public class SaveandLoadTest {
 
     @Test
     public void testSaveAndLoadGame() throws Exception {
-        GameState gameState = new GameState();
+        SaveandLoad gameState = new SaveandLoad();
         String filePath = "test_game_state.txt";
 
         // Korongok hozzáadása a táblához a teszt során
@@ -23,7 +23,7 @@ public class GameStateTest {
         assertTrue(Files.exists(Paths.get(filePath)), "A fájl nem létezik.");
 
         // Játékállás betöltése fájlból
-        GameState loadedGameState = new GameState(); // Új GameState példány a betöltéshez
+        SaveandLoad loadedGameState = new SaveandLoad(); // Új GameState példány a betöltéshez
         loadedGameState.loadGameFromFile(filePath);
 
         // Ellenőrizzük, hogy a betöltött játékállás megegyezik a mentett állással
@@ -37,7 +37,7 @@ public class GameStateTest {
     }
     @Test
     public void testSetBoard() {
-        GameState gameState = new GameState();
+        SaveandLoad gameState = new SaveandLoad();
 
         // Új tábla létrehozása és beállítása
         Board newBoard = new Board(6, 7); // 6 sor, 7 oszlop

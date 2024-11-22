@@ -1,8 +1,11 @@
-package org.connect4.game;
+package org.connect4.model;
+
 /**
  * Egy adott színű korongot képvisel.
  */
+
 public final class Disc {
+
     /** A korong színe, amelynek 'sárga' vagy 'piros' kell lennie. */
     private final String discColor;
     /**
@@ -11,6 +14,7 @@ public final class Disc {
      * @param color a korong színe, amelynek 'sárga' vagy 'piros' kell lennie.
      * @throws IllegalArgumentException ha a szín nem 'sárga' vagy 'piros'.
      */
+
     public Disc(final String color) {
         if (!color.equals("Sárga") && !color.equals("Piros")) {
             throw new IllegalArgumentException(
@@ -24,6 +28,7 @@ public final class Disc {
      *
      * @return a korong színe.
      */
+
     public String getColor() {
         return discColor;  // Visszaadja a discColor változóban tárolt színt
     }
@@ -32,7 +37,9 @@ public final class Disc {
      *
      * @return a korong színét sztringként.
      */
+
     @Override
+
     public String toString() {
         return discColor;  // A korong színét adja vissza sztringként
     }
