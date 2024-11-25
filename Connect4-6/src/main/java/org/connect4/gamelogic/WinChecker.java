@@ -3,7 +3,7 @@ package org.connect4.gamelogic;
 import org.connect4.model.Board;
 
 /**
- * A utility class for checking if there is a winning condition on the Connect-4 board.
+ * Segédosztály a Connect-4 táblán található győzelmi feltétel ellenőrzésére.
  */
 public class WinChecker {
     private static final int CONNECT_WIN_COUNT = 4;
@@ -11,19 +11,19 @@ public class WinChecker {
     private final Board board;
 
     /**
-     * Constructs a WinChecker for the specified board.
+     * Létrehoz egy WinChecker példányt a megadott táblához.
      *
-     * @param board The game board to check for a winning condition.
+     * @param board A játék tábla, amelyen a győzelmi feltételt ellenőrizni kell.
      */
     public WinChecker(Board board) {
         this.board = board;
     }
 
     /**
-     * Checks if the specified player color has a winning sequence on the board.
+     * Ellenőrzi, hogy a megadott játékosszínnek van-e nyerő sorozata a táblán.
      *
-     * @param color The color of the player's discs to check for a win.
-     * @return True if a winning sequence is found, false otherwise.
+     * @param color A játékos korongjainak színe, amelyet nyerésre ellenőriz.
+     * @return Igaz, ha található nyerő sorozat, egyébként hamis.
      */
     public boolean checkForWin(final String color) {
         // Függőleges ellenőrzés

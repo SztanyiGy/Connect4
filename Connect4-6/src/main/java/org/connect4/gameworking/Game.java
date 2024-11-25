@@ -11,8 +11,8 @@ import org.connect4.player.HumanPlayer;
 import org.connect4.player.Player;
 
 /**
- * The Game class manages the main game logic, including player turns,
- * game state, and interactions with the user and the database.
+ * A Game osztály kezeli a fő játéklogikát, beleértve a játékosok lépéseit,
+ * a játék állapotát, valamint a felhasználói interakciókat és az adatbázis műveleteket.
  */
 public class Game {
     private static final String GAME_START_MSG = "A játék kezdődik...";
@@ -27,18 +27,18 @@ public class Game {
     private Logic gameLogic;
     private BoardRenderer boardRenderer;
     public Player humanPlayer;
-    private Player computerPlayer;
+    public Player computerPlayer;
     public boolean isHumanTurn;
     public Database database;
 
     /**
-     * Constructs a new Game instance, initializing the game components.
+     * Új Game példányt hoz létre, inicializálva a játék komponenseit.
      *
-     * @param inputReader The input reader for user interaction.
+     * @param inputReader Az input olvasó a felhasználói interakcióhoz.
      */
     public Game(InputReader inputReader) {
         this.inputReader = inputReader;
-        this.database = new Database();  // Inicializáljuk az adatbázist
+        this.database = new Database();  // Az adatbázis inicializálása
         this.gameState = new GameState(new Board(Main.ROWS, Main.COLUMNS));
         this.fileManager = new FileManager();
         this.gameLogic = new Logic(gameState.getBoard());
@@ -46,7 +46,7 @@ public class Game {
     }
 
     /**
-     * Displays the main menu and handles user input for game options.
+     * Megjeleníti a főmenüt és kezeli a felhasználói választásokat.
      */
     public void showMenu() {
         while (true) {
@@ -74,7 +74,7 @@ public class Game {
     }
 
     /**
-     * Starts a new game and manages the main game loop.
+     * Elindít egy új játékot és kezeli a fő játékciklust.
      */
     private void startGame() {
         System.out.println(GAME_START_MSG);
@@ -100,7 +100,7 @@ public class Game {
     }
 
     /**
-     * Resets the game state for a new game.
+     * Visszaállítja a játék állapotát egy új játékhoz.
      */
     private void resetGame() {
         this.gameState = new GameState(new Board(Main.ROWS, Main.COLUMNS)); // Új GameState inicializálása új táblával
@@ -109,28 +109,28 @@ public class Game {
     }
 
     /**
-     * Initializes the players for the game, prompting the user for input.
+     * Inicializálja a játékosokat, és bekéri a felhasználótól a szükséges adatokat.
      */
     public void initializePlayers() {
-        System.out.print("Enter player name: ");
+        System.out.print("Add meg a játékos nevét: ");
         String playerName = inputReader.nextLine();
         this.humanPlayer = new HumanPlayer(playerName, "Sárga");
         this.computerPlayer = new ComputerPlayer("Computer", "Piros");
     }
 
     /**
-     * Determines the current player based on the turn order.
+     * Meghatározza, hogy jelenleg melyik játékos következik.
      *
-     * @return The current player.
+     * @return A soron következő játékos.
      */
-    private Player getCurrentPlayer() {
+    public Player getCurrentPlayer() {
         return isHumanTurn ? humanPlayer : computerPlayer;
     }
 
     /**
-     * Executes the current player's turn, handling their move.
+     * Végrehajtja az aktuális játékos lépését, és kezeli a mozgásukat.
      *
-     * @param currentPlayer The player whose turn it is.
+     * @param currentPlayer Az aktuális játékos.
      */
     public void playTurn(Player currentPlayer) {
         System.out.println(currentPlayer.getName() + PLAYER_TURN_MSG);
@@ -140,14 +140,14 @@ public class Game {
 
         if (!gameState.getBoard().dropDisc(currentPlayer, column)) {
             System.out.println(COLUMN_FULL_MSG);
-            playTurn(currentPlayer); // újra próbálkozás
+            playTurn(currentPlayer); // Újra próbálkozás
         }
     }
 
     /**
-     * Handles the actions when a player wins the game.
+     * Kezeli a nyerési eseményt, ha egy játékos nyer.
      *
-     * @param currentPlayer The player who won the game.
+     * @param currentPlayer Az a játékos, aki nyert.
      */
     private void processWin(Player currentPlayer) {
         boardRenderer.render(gameState.getBoard());
@@ -155,10 +155,10 @@ public class Game {
     }
 
     /**
-     * Prompts the human player for their move and returns the selected column.
+     * Bekéri a játékos lépését és visszaadja a választott oszlopot.
      *
-     * @param currentPlayer The human player.
-     * @return The column selected by the player.
+     * @param currentPlayer Az emberi játékos.
+     * @return Az oszlop, amelyet a játékos választott.
      */
     public int getPlayerMove(Player currentPlayer) {
         System.out.printf("%s, válassz oszlopot (0-%d): ", currentPlayer.getName(), Main.COLUMNS - 1);

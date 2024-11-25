@@ -40,6 +40,7 @@
       <scope>test</scope>
     </dependency>
 
+
     <dependency>
       <groupId>net.bytebuddy</groupId>
       <artifactId>byte-buddy</artifactId>
@@ -50,14 +51,9 @@
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
-      <version>1.4.0</version>
+      <version>1.4.12</version>
     </dependency>
 
-    <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>8.0.32</version>
-    </dependency>
 
     <dependency>
       <groupId>org.xerial</groupId>
@@ -138,7 +134,7 @@
                     <limit>
                       <counter>LINE</counter>
                       <value>COVEREDRATIO</value>
-                      <minimum>0.4</minimum> <!-- Minimum 80% coverage -->
+                      <minimum>0.5</minimum> <!-- Minimum 80% coverage -->
                     </limit>
                   </limits>
                 </rule>

@@ -39,5 +39,22 @@ class GameTest {
         // Then
         assertEquals(3, move); // Ellenőrizzük, hogy a bemenet helyesen értelmeződött
     }
+    @Test
+    void testPlayerSwitch() {
+        // Given
+        InputReader inputReader = new InputReader(new ByteArrayInputStream(new byte[0]));
+        Game game = new Game(inputReader);
+
+        // When
+        Player initialPlayer = game.getCurrentPlayer();
+        game.isHumanTurn = !game.isHumanTurn;
+        Player switchedPlayer = game.getCurrentPlayer();
+
+        // Then
+        assertEquals(game.humanPlayer, initialPlayer); // Első játékos az ember
+        assertEquals(game.computerPlayer, switchedPlayer); // Második a gép
+    }
+
+
 
 }

@@ -11,15 +11,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Handles the database operations for the Connect-4 game.
- * Manages player data and high scores.
+ * Kezeli a Connect-4 játék adatbázis műveleteit.
+ * Kezeli a játékos adatokat és a legjobb eredményeket.
  */
 public class Database {
     private static final Logger LOGGER = LoggerFactory.getLogger(Database.class);
     private Connection connection;
 
     /**
-     * Initializes the database connection and creates the necessary table if it doesn't exist.
+     * Inicializálja az adatbázis kapcsolatot, és létrehozza a szükséges táblát, ha az nem létezik.
      */
     public Database() {
         try {
@@ -37,7 +37,7 @@ public class Database {
     }
 
     /**
-     * Creates the high_scores table if it doesn't already exist.
+     * Létrehozza a high_scores táblát, ha az még nem létezik.
      */
     private void initializeDatabase() {
         try (Statement statement = connection.createStatement()) {
@@ -52,10 +52,10 @@ public class Database {
     }
 
     /**
-     * Adds a win for the specified player. If the player doesn't exist in the database,
-     * they are added with a win count of 1.
+     * Hozzáad egy győzelmet a megadott játékoshoz. Ha a játékos nem létezik az adatbázisban,
+     * hozzáadja őt 1 győzelemmel.
      *
-     * @param playerName The name of the player.
+     * @param playerName A játékos neve.
      */
     public void addWin(String playerName) {
         try {
@@ -80,10 +80,10 @@ public class Database {
     }
 
     /**
-     * Checks if a player exists in the database.
+     * Ellenőrzi, hogy egy játékos létezik-e az adatbázisban.
      *
-     * @param playerName The name of the player to check.
-     * @return True if the player exists, false otherwise.
+     * @param playerName A játékos neve, akit ellenőrizni kell.
+     * @return Igaz, ha a játékos létezik, egyébként hamis.
      */
     private boolean isPlayerInDatabase(String playerName) {
         String checkSql = "SELECT 1 FROM high_scores WHERE player_name = ?";
@@ -98,7 +98,7 @@ public class Database {
     }
 
     /**
-     * Displays the high scores, sorted by the number of wins in descending order.
+     * Megjeleníti a legjobb eredményeket, győzelmek szerint csökkenő sorrendben rendezve.
      */
     public void displayHighScores() {
         try (Statement statement = connection.createStatement()) {
@@ -119,7 +119,7 @@ public class Database {
     }
 
     /**
-     * Closes the database connection.
+     * Bezárja az adatbázis kapcsolatot.
      */
     public void close() {
         try {

@@ -1,7 +1,6 @@
 package org.connect4.gamelogic;
 
 import org.connect4.model.Board;
-import org.connect4.player.Player;
 /**
  * A Logic osztály ellenőrzi, hogy melyik játékos nyert.
  */
