@@ -1,1 +1,1 @@
-80%-os lefedettség kivételével minden követelmény van
+80%-os lefedettség kivételével minden követelmény megvan
